@@ -1,0 +1,95 @@
+# AI-Powered Language Translation Tool
+
+A full-stack web application built per the internship BRD. Users can type text, pick source & target languages, and receive AI-translated output. Additional features include copy-to-clipboard, text-to-speech, and a clear button.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Translation API Choice**: To avoid exposing billing credentials, this plan uses the **MyMemory** free REST API (no API key required for up to 1000 words/day). It is 100% compatible with the architecture described in the BRD and can be swapped for Google/Microsoft by changing one environment variable in the backend. Please confirm this is acceptable, or name your preferred API.
+
+> [!NOTE]
+> **No billing required** — MyMemory works out of the box. If you later want Google Translate or Microsoft Translator, you just add the key to `.env` and the backend switches automatically.
+
+---
+
+## Proposed Changes
+
+### Backend — Python Flask
+
+#### [NEW] `backend/app.py`
+Main Flask application with two routes:
+- `GET /api/languages` — returns a curated list of ~30 supported language codes and names
+- `POST /api/translate` — accepts `{ text, source, target }`, calls MyMemory API, returns `{ translatedText }`
+
+#### [NEW] `backend/requirements.txt`
+```
+flask
+flask-cors
+requests
+python-dotenv
+```
+
+#### [NEW] `backend/.env.example`
+```
+TRANSLATION_API=mymemory   # or: google | microsoft
+GOOGLE_API_KEY=
+MICROSOFT_API_KEY=
+```
+
+---
+
+### Frontend — React + TypeScript (Vite)
+
+Scaffolded with `npx create-vite@latest` into `frontend/`.
+
+#### [NEW] `frontend/src/index.css`
+Global design system: dark-mode-first palette, CSS variables, Google Fonts (Inter), animations.
+
+#### [NEW] `frontend/src/App.tsx`
+Root layout: Header + TranslatorCard component.
+
+#### [NEW] `frontend/src/components/Header.tsx`
+App title with animated gradient text.
+
+#### [NEW] `frontend/src/components/TranslatorCard.tsx`
+Main card containing:
+- Source `LanguageSelector` + source `TextArea`
+- Swap languages button
+- Target `LanguageSelector` + output `TextArea`
+- Action buttons: Translate, Copy, Speak, Clear
+
+#### [NEW] `frontend/src/components/LanguageSelector.tsx`
+Dropdown populated from `/api/languages`.
+
+#### [NEW] `frontend/src/components/TextArea.tsx`
+Reusable styled textarea with character counter.
+
+#### [NEW] `frontend/src/services/api.ts`
+Typed fetch helpers: `translateText()` and `getLanguages()`.
+
+---
+
+## Verification Plan
+
+### Automated — Backend
+```bash
+cd backend
+python -m pytest test_app.py -v
+```
+A `test_app.py` will be created with tests for:
+- Empty input → 400 error
+- Same source/target → warning response
+- Valid translation request → 200 with `translatedText`
+
+### Manual — End-to-End (Browser)
+1. Start backend: `cd backend && python app.py`
+2. Start frontend: `cd frontend && npm run dev`
+3. Open `http://localhost:5173`
+4. Type "Hello World" → select English → Spanish → click **Translate** → expect "Hola Mundo"
+5. Click **Copy** → paste in notepad → verify text copied
+6. Click **Speak** → verify browser reads translation aloud
+7. Click **Clear** → both fields empty
+8. Click **Translate** with empty input → expect red error toast "Please enter text"
+
+### Browser Agent Verification
+After manual steps pass, a browser subagent will screenshot the running UI for the walkthrough.
