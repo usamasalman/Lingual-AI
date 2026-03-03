@@ -672,7 +672,7 @@ A: Yes! Use Flask server (Gunicorn) + React build (nginx/Vercel).
 ## Support & Contact
 
 **Project:** LinguaAI  
-**Author:** AI Intern @ SoftGrowTech  
+**Author:** Usama Salman AI Intern @ SoftGrowTech  
 **Date:** March 2026  
 **GitHub:** https://github.com/usamasalman/Internship
 
