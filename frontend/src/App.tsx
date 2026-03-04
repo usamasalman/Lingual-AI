@@ -9,8 +9,8 @@ const App: React.FC = () => (
     <footer className="footer">
       <p>
         Powered by{" "}
-        <a href="https://mymemory.translated.net/" target="_blank" rel="noreferrer">
-          MyMemory API
+        <a href="https://learn.microsoft.com/en-us/azure/ai-services/translator/" target="_blank" rel="noreferrer">
+          Microsoft Translator API
         </a>{" "}
         · Built for the AI Internship Program @ SoftGrowTech
       </p>
