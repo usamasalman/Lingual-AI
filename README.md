@@ -36,7 +36,7 @@
 - 📊 **Character counter** with 5,000 character limit
 - 🔄 **Swap source/target languages** with one click
 
-The application uses the **free MyMemory API** for translations, requiring no API keys or billing setup.
+The application uses the **Microsoft translator API** for translations.
 
 ---
 
@@ -69,7 +69,7 @@ The application uses the **free MyMemory API** for translations, requiring no AP
 | **Backend Language** | Python | 3.8+ |
 | **Testing Framework** | pytest | 8.2+ |
 | **API Client** | fetch API | Native |
-| **Translation Service** | MyMemory API | REST |
+| **Translation Service** | Microsoft translator API REST |
 | **Package Manager** | npm (Frontend), pip (Backend) | Latest |
 
 ---
@@ -589,10 +589,10 @@ npm run dev -- --port 5174
 #### Problem: "Translation request timed out"
 
 **Solution:**
-- MyMemory API may be slow
+- Microsoft API may be slow
 - Try smaller text chunks
 - Check your internet connection
-- Switch to Google/Microsoft API if available
+- Switch to Google API if available
 
 ---
 
